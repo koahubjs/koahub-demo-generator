@@ -27,19 +27,19 @@ helpers({
     handlebars: hbs.handlebars
 });
 
-koa.use(function (ctx, next) {
+koa.use(convert(function *(next) {
 
-    ctx.model = model;
+    this.model = model;
 
-    if (!ctx.request.body.files) {
-        ctx.post = ctx.request.body;
+    if (!this.request.body.files) {
+        this.post = this.request.body;
     } else {
-        ctx.post = ctx.request.body.fields;
-        ctx.file = ctx.request.body.files;
+        this.post = this.request.body.fields;
+        this.file = this.request.body.files;
     }
 
-    return next();
-});
+    yield next;
+}));
 
 koa.use(convert(function *(next) {
     try {
