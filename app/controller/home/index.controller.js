@@ -8,7 +8,6 @@ module.exports = class extends koahub.controller {
     *index() {
 
         var context = {version: process.version, time: new Date()};
-        var article = yield this.model('article').getList({});
-        yield this.render('index', {context: context, article: article});
+        yield this.render('index', context);
     }
 }
