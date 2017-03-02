@@ -1,20 +1,12 @@
 var Koahub = require("koahub").default;
-var hbs = require("koahub-handlebars");
 var convert = require("koa-convert");
-var body = require("koa-body");
-var serve = require("koa-static");
-var session = require("koa-session2").default;
+var hbs = require("koahub-handlebars");
 var helpers = require("handlebars-helpers");
 var model = require("./util/model.util");
 
 var app = new Koahub();
 var koa = app.getKoa();
 
-koa.use(convert(body({multipart: true})));
-koa.use(convert(serve('./www')));
-koa.use(session({
-    key: "koahubjs",   //default "koa:sess"
-}));
 koa.use(hbs.middleware({
     extname: '.html',
     viewPath: './www',
@@ -30,13 +22,6 @@ helpers({
 koa.use(convert(function *(next) {
 
     this.model = model;
-
-    if (!this.request.body.files) {
-        this.post = this.request.body;
-    } else {
-        this.post = this.request.body.fields;
-        this.file = this.request.body.files;
-    }
 
     yield next;
 }));
