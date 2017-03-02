@@ -1,6 +1,6 @@
 {
   "name": "koahub-demo-generator",
-  "version": "0.0.1",
+  "version": "2.0.0",
   "description": "koahub-demo-generator",
   "main": "app.js",
   "scripts": {
